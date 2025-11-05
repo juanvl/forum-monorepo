@@ -2,7 +2,7 @@ import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
 import { createZodDto } from 'nestjs-zod';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from 'src/database/prisma/prisma.service';
 import { z } from 'zod';
 
 const authenticateBodySchema = z.object({

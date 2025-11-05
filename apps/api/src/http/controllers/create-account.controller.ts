@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { hash } from 'bcryptjs';
 import { createZodDto } from 'nestjs-zod';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from 'src/database/prisma/prisma.service';
 import { z } from 'zod';
 
 const createAccountBodySchema = z.object({
