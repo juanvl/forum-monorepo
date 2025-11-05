@@ -2,7 +2,7 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": "./src",
+    // "rootDir": "./src",
     "outDir": "./dist",
     "composite": true,
     // Environment Settings
@@ -10,14 +10,10 @@
     "module": "es2022",
     "target": "esnext",
     "moduleResolution": "bundler",
-    "types": [
-      "vitest/globals"
-    ],
+    "types": ["vitest/globals"],
     "baseUrl": "./",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     // For nodejs:
     // "lib": ["esnext"],
@@ -45,8 +41,5 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
-  },
-  "include": [
-    "src"
-  ]
+  }
 }
