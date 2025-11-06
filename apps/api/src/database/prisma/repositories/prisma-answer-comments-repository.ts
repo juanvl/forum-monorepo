@@ -1,3 +1,8 @@
+import {
+  AnswerCommentsRepository,
+  AnswerComment,
+  PaginationParams,
+} from '@forum/domain';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

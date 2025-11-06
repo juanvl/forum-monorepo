@@ -1,3 +1,7 @@
+import {
+  QuestionAttachmentsRepository,
+  QuestionAttachment,
+} from '@forum/domain';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { AnswerAttachmentsRepository } from '@forum/domain';
+import { AnswerAttachment, AnswerAttachmentsRepository } from '@forum/domain';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

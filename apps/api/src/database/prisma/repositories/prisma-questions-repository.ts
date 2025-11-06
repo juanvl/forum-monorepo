@@ -1,4 +1,4 @@
-import { Question } from '@forum/domain';
+import { PaginationParams, Question, QuestionsRepository } from '@forum/domain';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
