@@ -19,5 +19,10 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": false,
     "strict": true
-  }
+  },
+  "references": [
+    {
+      "path": "../../packages/domain"
+    }
+  ]
 }
