@@ -1,4 +1,8 @@
-import { CreateQuestionUseCase, QuestionsRepository } from '@forum/domain';
+import {
+  CreateQuestionUseCase,
+  FetchRecentQuestionsUseCase,
+  QuestionsRepository,
+} from '@forum/domain';
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from 'src/database/database.module';
 import { PrismaQuestionsRepository } from 'src/database/prisma/repositories/prisma-questions-repository';
@@ -20,6 +24,12 @@ import { FetchRecentQuestionsController } from './controllers/fetch-recent-quest
       provide: CreateQuestionUseCase,
       useFactory: (repo: QuestionsRepository) =>
         new CreateQuestionUseCase(repo),
+      inject: [PrismaQuestionsRepository],
+    },
+    {
+      provide: FetchRecentQuestionsUseCase,
+      useFactory: (repo: QuestionsRepository) =>
+        new FetchRecentQuestionsUseCase(repo),
       inject: [PrismaQuestionsRepository],
     },
   ],
