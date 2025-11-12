@@ -19,7 +19,8 @@ import {
 } from 'nestjs-zod';
 import { ZodError } from 'zod';
 import { AuthModule } from './auth/auth.module';
-import { envSchema } from './env';
+import { envSchema } from './env/env';
+import { EnvModule } from './env/env.module';
 import { HttpModule } from './http/http.module';
 
 @Catch(HttpException)
@@ -47,6 +48,7 @@ class HttpExceptionFilter extends BaseExceptionFilter {
     }),
     AuthModule,
     HttpModule,
+    EnvModule,
   ],
   providers: [
     {
