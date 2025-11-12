@@ -4,7 +4,9 @@ import {
   Encrypter,
   FetchRecentQuestionsUseCase,
   HashComparer,
+  HashGenerator,
   QuestionsRepository,
+  RegisterStudentUseCase,
   StudentsRepository,
 } from '@forum/domain';
 import { Module } from '@nestjs/common';
@@ -48,6 +50,12 @@ import { FetchRecentQuestionsController } from './controllers/fetch-recent-quest
         encrypter: Encrypter,
       ) => new AuthenticateStudentUseCase(repo, hashComparer, encrypter),
       inject: [PrismaStudentsRepository, BcryptHasher, JwtEncrypter],
+    },
+    {
+      provide: RegisterStudentUseCase,
+      useFactory: (repo: StudentsRepository, hashGenerator: HashGenerator) =>
+        new RegisterStudentUseCase(repo, hashGenerator),
+      inject: [PrismaStudentsRepository, BcryptHasher],
     },
   ],
 })
