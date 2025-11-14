@@ -3,6 +3,7 @@ import {
   CreateQuestionUseCase,
   Encrypter,
   FetchRecentQuestionsUseCase,
+  GetQuestionBySlugUseCase,
   HashComparer,
   HashGenerator,
   QuestionsRepository,
@@ -20,6 +21,7 @@ import { AuthenticateController } from './controllers/authenticate.controller';
 import { CreateAccountController } from './controllers/create-account.controller';
 import { CreateQuestionController } from './controllers/create-question.controller';
 import { FetchRecentQuestionsController } from './controllers/fetch-recent-questions.controller';
+import { GetQuestionBySlugController } from './controllers/get-question-by-slug.controller';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -28,6 +30,7 @@ import { FetchRecentQuestionsController } from './controllers/fetch-recent-quest
     AuthenticateController,
     CreateQuestionController,
     FetchRecentQuestionsController,
+    GetQuestionBySlugController,
   ],
   providers: [
     {
@@ -56,6 +59,12 @@ import { FetchRecentQuestionsController } from './controllers/fetch-recent-quest
       useFactory: (repo: StudentsRepository, hashGenerator: HashGenerator) =>
         new RegisterStudentUseCase(repo, hashGenerator),
       inject: [PrismaStudentsRepository, BcryptHasher],
+    },
+    {
+      provide: GetQuestionBySlugUseCase,
+      useFactory: (repo: QuestionsRepository) =>
+        new GetQuestionBySlugUseCase(repo),
+      inject: [PrismaQuestionsRepository],
     },
   ],
 })
