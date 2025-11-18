@@ -13,8 +13,15 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
+  "modulePathIgnorePatterns": [
+    "<rootDir>/dist",
+    "<rootDir>/generated/prisma/dist",
+    "<rootDir>/node_modules/.pnpm"
+  ],
   "moduleNameMapper": {
     "^src/(.*)$": "<rootDir>/src/$1",
-    "^generated/prisma/client$": "<rootDir>/generated/prisma/client"
+    "^test/(.*)$": "<rootDir>/test/$1",
+    "^generated/prisma/client$": "<rootDir>/generated/prisma/client",
+    "^@/(.*)$": "<rootDir>/../../packages/domain/src/$1"
   }
 }
