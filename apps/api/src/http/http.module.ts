@@ -1,4 +1,6 @@
 import {
+  AnswerQuestionUseCase,
+  AnswersRepository,
   AuthenticateStudentUseCase,
   CreateQuestionUseCase,
   DeleteQuestionUseCase,
@@ -18,9 +20,11 @@ import { BcryptHasher } from 'src/cryptography/bcrypt-hasher';
 import { CryptographyModule } from 'src/cryptography/cryptography.module';
 import { JwtEncrypter } from 'src/cryptography/jwt-encrypter';
 import { DatabaseModule } from 'src/database/database.module';
+import { PrismaAnswersRepository } from 'src/database/prisma/repositories/prisma-answers-repository';
 import { PrismaQuestionAttachmentsRepository } from 'src/database/prisma/repositories/prisma-question-attachments-repository';
 import { PrismaQuestionsRepository } from 'src/database/prisma/repositories/prisma-questions-repository';
 import { PrismaStudentsRepository } from 'src/database/prisma/repositories/prisma-students-repository';
+import { AnswerQuestionController } from './controllers/answer-question.controller';
 import { AuthenticateController } from './controllers/authenticate.controller';
 import { CreateAccountController } from './controllers/create-account.controller';
 import { CreateQuestionController } from './controllers/create-question.controller';
@@ -39,6 +43,7 @@ import { GetQuestionBySlugController } from './controllers/get-question-by-slug.
     GetQuestionBySlugController,
     EditQuestionController,
     DeleteQuestionController,
+    AnswerQuestionController,
   ],
   providers: [
     {
@@ -87,6 +92,11 @@ import { GetQuestionBySlugController } from './controllers/get-question-by-slug.
       useFactory: (repo: QuestionsRepository) =>
         new DeleteQuestionUseCase(repo),
       inject: [PrismaQuestionsRepository],
+    },
+    {
+      provide: AnswerQuestionUseCase,
+      useFactory: (repo: AnswersRepository) => new AnswerQuestionUseCase(repo),
+      inject: [PrismaAnswersRepository],
     },
   ],
 })
