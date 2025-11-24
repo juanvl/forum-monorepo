@@ -17,3 +17,4 @@ export * from "./fetch-question-comments";
 export * from "./fetch-recent-questions";
 export * from "./get-question-by-slug";
 export * from "./register-student";
+export * from "./upload-and-create-attachment";
