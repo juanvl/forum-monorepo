@@ -3,6 +3,7 @@ import {
   AnswerCommentsRepository,
   AnswerQuestionUseCase,
   AnswersRepository,
+  AttachmentsRepository,
   AuthenticateStudentUseCase,
   ChooseQuestionBestAnswerUseCase,
   CommentOnAnswerUseCase,
@@ -27,6 +28,8 @@ import {
   QuestionsRepository,
   RegisterStudentUseCase,
   StudentsRepository,
+  UploadAndCreateAttachmentUseCase,
+  Uploader,
 } from '@forum/domain';
 import { Module } from '@nestjs/common';
 import { BcryptHasher } from 'src/cryptography/bcrypt-hasher';
@@ -36,10 +39,13 @@ import { DatabaseModule } from 'src/database/database.module';
 import { PrismaAnswerAttachmentsRepository } from 'src/database/prisma/repositories/prisma-answer-attachments-repository';
 import { PrismaAnswerCommentsRepository } from 'src/database/prisma/repositories/prisma-answer-comments-repository';
 import { PrismaAnswersRepository } from 'src/database/prisma/repositories/prisma-answers-repository';
+import { PrismaAttachmentsRepository } from 'src/database/prisma/repositories/prisma-attachments-repository';
 import { PrismaQuestionAttachmentsRepository } from 'src/database/prisma/repositories/prisma-question-attachments-repository';
 import { PrismaQuestionCommentsRepository } from 'src/database/prisma/repositories/prisma-question-comments-repository';
 import { PrismaQuestionsRepository } from 'src/database/prisma/repositories/prisma-questions-repository';
 import { PrismaStudentsRepository } from 'src/database/prisma/repositories/prisma-students-repository';
+import { R2Storage } from 'src/storage/r2-storage';
+import { StorageModule } from 'src/storage/storage.module';
 import { AnswerQuestionController } from './controllers/answer-question.controller';
 import { AuthenticateController } from './controllers/authenticate.controller';
 import { ChooseQuestionBestAnswerController } from './controllers/choose-question-best-answer.controller';
@@ -61,7 +67,7 @@ import { GetQuestionBySlugController } from './controllers/get-question-by-slug.
 import { UploadAttachmentController } from './controllers/upload-attachment.controller';
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [
     CreateAccountController,
     AuthenticateController,
@@ -207,6 +213,12 @@ import { UploadAttachmentController } from './controllers/upload-attachment.cont
       useFactory: (repo: AnswerCommentsRepository) =>
         new FetchAnswerCommentsUseCase(repo),
       inject: [PrismaAnswerCommentsRepository],
+    },
+    {
+      provide: UploadAndCreateAttachmentUseCase,
+      useFactory: (repo: AttachmentsRepository, uploader: Uploader) =>
+        new UploadAndCreateAttachmentUseCase(repo, uploader),
+      inject: [PrismaAttachmentsRepository, R2Storage],
     },
   ],
 })
