@@ -9,6 +9,7 @@ import { z } from 'zod';
 const createQuestionBodySchema = z.object({
   title: z.string(),
   content: z.string(),
+  attachments: z.array(z.uuid()),
 });
 
 class CreateQuestionDTO extends createZodDto(createQuestionBodySchema) {}
@@ -23,14 +24,14 @@ export class CreateQuestionController {
     @Body() body: CreateQuestionDTO,
     @CurrentUser() user: UserPayload,
   ) {
-    const { title, content } = body;
+    const { title, content, attachments } = body;
     const userId = user.sub;
 
     const result = await this.createQuestion.execute({
       title,
       content,
       authorId: userId,
-      attachmentsIds: [],
+      attachmentsIds: attachments,
     });
 
     if (result.isLeft()) {
