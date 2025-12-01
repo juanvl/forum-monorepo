@@ -58,13 +58,16 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   async create(question: Question): Promise<void> {
     const data = PrismaQuestionMapper.toPrisma(question);
 
-    await this.prisma.question.create({
-      data,
-    });
+    await this.prisma.$transaction(async (trx) => {
+      await trx.question.create({
+        data,
+      });
 
-    await this.questionAttachmentsRepository.createMany(
-      question.attachments.getItems(),
-    );
+      await this.questionAttachmentsRepository.createMany(
+        question.attachments.getItems(),
+        trx,
+      );
+    });
   }
 
   async save(question: Question): Promise<void> {
